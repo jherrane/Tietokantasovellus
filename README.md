@@ -3,7 +3,8 @@
 Yleisiä linkkejä:
 
 [Linkki sovellukseeni](https://jherrane.users.cs.helsinki.fi/tsoha)
-[Linkki dokumentaatioon](https://www.github.com/Tietokantasovellus/doc/Dokumentaatio.pdf)
+
+[Linkki dokumentaatioon](https://github.com/jherrane/Tietokantasovellus/blob/master/doc/Dokumentaatio.pdf)
 
 ## Työn aihe
 
