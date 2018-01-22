@@ -20,7 +20,10 @@ Järjestelmän ylläpitäjä voi list järjestelmän reseptejä joko kokonaan it
 
 Seuraavassa kaikki staattiset käyttöliittymän esimerkkisivut:
 
-[Etusivu](http://http://jherrane.users.cs.helsinki.fi/tsoha/)
-[Listaus](http://http://jherrane.users.cs.helsinki.fi/tsoha/list)
-[Muokkaus](http://http://jherrane.users.cs.helsinki.fi/tsoha/edit)
-[Esittely](http://http://jherrane.users.cs.helsinki.fi/tsoha/show)
+[Etusivu](http://jherrane.users.cs.helsinki.fi/tsoha/)
+
+[Listaus](http://jherrane.users.cs.helsinki.fi/tsoha/list)
+
+[Muokkaus](http://jherrane.users.cs.helsinki.fi/tsoha/edit)
+
+[Esittely](http://jherrane.users.cs.helsinki.fi/tsoha/show)
