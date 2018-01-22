@@ -8,7 +8,22 @@
     }
 
     public static function sandbox(){
-      // Testaa koodiasi täällä
-      echo 'Hello World!';
+      View::make('helloworld.html');
+    }
+
+    public static function login(){
+      View::make('login.html');
+    }
+
+    public static function list(){
+      View::make('list.html');
+    }
+
+    public static function edit(){
+      View::make('edit.html');
+    }
+
+    public static function show(){
+      View::make('show.html');
     }
   }

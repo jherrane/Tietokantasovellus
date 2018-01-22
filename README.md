@@ -15,3 +15,12 @@ Järjestelmään kirjaudutaan sisään. Samalla hakusanalla voi saada useita eri
 Tavallinen käyttäjä voi hakea drinkkireseptejä kannasta ja ehdottaa uusien lisäämistä kantaan.
 
 Järjestelmän ylläpitäjä voi list järjestelmän reseptejä joko kokonaan itse tai ehdotettuja hyvksymällä. Lisääminen voi tapahtua esimerkiksi syöttämällä tiedot lomakkeeseen tai lukemalla resepti (tai useita reseptejä) esimerkiksi tekstitiedostosta. Järjestelmän ylläpitäjä voi antaa myös tavallisille käyttäjille reseptin lisäysoikeuden.
+
+## Käyttöliittymä
+
+Seuraavassa kaikki staattiset käyttöliittymän esimerkkisivut:
+
+[Etusivu](http://http://jherrane.users.cs.helsinki.fi/tsoha/)
+[Listaus](http://http://jherrane.users.cs.helsinki.fi/tsoha/list)
+[Muokkaus](http://http://jherrane.users.cs.helsinki.fi/tsoha/edit)
+[Esittely](http://http://jherrane.users.cs.helsinki.fi/tsoha/show)

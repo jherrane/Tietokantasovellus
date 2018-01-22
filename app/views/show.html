@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Jallukola</h1>
+  <!-- Painikkeet tähän -->
+  <p>
+    <button class="btn btn-danger">Poista</button> <a href="#" class="btn btn-default">Muokkaa</a>
+  </p>
+  <!-- Tiedot tulee listana tähän -->
+  <ul>
+    <li><strong>Tyyppi:</strong> Long Drink</li>
+    <li><strong>Hintaluokka:</strong> <label class="label label-info">€</label></li>
+    <li><strong>Lisäyspäivä:</strong> 6.6.2006</li>
+  </ul>
+
+  <ul class="list-group">
+  <li class="list-group-item justify-content-between">
+    Jaloviina(*)
+    <span class="badge badge-default badge-pill">4 cl</span>
+  </li>
+  <li class="list-group-item justify-content-between">
+    Kola
+    <span class="badge badge-default badge-pill"></span>
+  </li>
+</ul>
+
+  <p>
+    Sekoita korkeaan lasiin 4 cl Jaloviinaa(*), lisää haluamasi määrä jäitä ja täytä valitsemallasi kolajuomalla. 
+  </p>
+{% endblock %}
