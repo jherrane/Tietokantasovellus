@@ -8,7 +8,9 @@ CREATE TABLE Drinkki(
 	id SERIAL PRIMARY KEY,
 	nimi varchar(100) NOT NULL,
 	tyyppi varchar(30),
-	hintaluokka INTEGER
+	hintaluokka INTEGER,
+	kuvaus varchar(400),
+	added date
 );
 
 CREATE TABLE RaakaAine(
