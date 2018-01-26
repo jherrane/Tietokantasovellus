@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>{{drinkki.nimi}}</h1>
+
+  <p>
+    <button class="btn btn-danger">Poista</button> <a href="#" class="btn btn-default">Muokkaa</a>
+  </p>
+
+  <ul>
+    <li><strong>Tyyppi:</strong> {{drinkki.tyyppi}}</li>
+    <li><strong>Hintaluokka:</strong> <label class="label label-info">{{
+    drinkki.hintaluokka}}</label></li>
+    <li><strong>Lisäyspäivä:</strong> {{drinkki.added}}</li>
+  </ul>
+
+  <ul class="list-group">
+    {% for ra in raakaAineet %}
+    <li class="list-group-item justify-content-between">
+      {{ra.nimi}}
+      <span class="badge badge-default badge-pill">{{ra.maara}}</span>
+    </li>
+    {% endfor %}
+  </ul>
+
+  <p>
+    {{drinkki.kuvaus}}
+  </p>
+{% endblock %}

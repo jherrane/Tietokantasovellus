@@ -1,5 +1,4 @@
 <?php
-
   class HelloWorldController extends BaseController{
 
     public static function index(){
@@ -8,7 +7,11 @@
     }
 
     public static function sandbox(){
-      View::make('helloworld.html');
+      $test = Drinkki::find(1);
+      $drinkit = Drinkki::all();
+
+      Kint::dump($drinkit);
+      Kint::dump($test);
     }
 
     public static function login(){

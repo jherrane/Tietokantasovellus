@@ -23,3 +23,11 @@
   $routes->get('/show', function(){
   	HelloWorldController::show();
   });
+
+  $routes->get('/drinkki', function(){
+    DrinkkiController::index();
+  });
+
+  $routes->get('/drinkki/:id', function($id){
+    DrinkkiController::show($id);
+  });
