@@ -8,7 +8,7 @@ class DrinkkiController extends BaseController{
 
 	public static function show($id){
 		$drinkki = Drinkki::find($id);
-		$raakaAineet = DrinkkiRaakaAine::find($id);
+		$raakaAineet = RaakaAine::find($id);
 
 		View::make('drinkki/show.html', array(
 			'drinkki' => $drinkki,

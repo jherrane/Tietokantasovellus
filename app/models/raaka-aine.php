@@ -23,5 +23,14 @@ class RaakaAine extends BaseModel{
 		return $raakaAineet;
 	}
 
+	public static function findByDrinkki($id){
+		$query = DB::connection()->prepare('SELECT * FROM Drinkki WHERE id = :id LIMIT 1');
+		$query->execute(array('id' => $id));
+		$row = $query->fetch();
+
+		
+
+		return null;
+	}
 
 }
