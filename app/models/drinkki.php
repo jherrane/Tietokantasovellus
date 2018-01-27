@@ -5,7 +5,13 @@ class Drinkki extends BaseModel{
 	public function __construct($attributes){
 		parent::__construct($attributes);
 	}
-	
+
+	public function save(){
+    $query = DB::connection()->prepare('INSERT INTO Drinkki (nimi,tyyppi,hintaluokka,kuvaus,added) VALUES (:nimi, :tyyppi, :hintaluokka, :kuvaus, :added) RETURNING id');
+    $query->execute(array('nimi' => $this->nimi, 'tyyppi' => $this->tyyppi, 'hintaluokka' => $this->hintaluokka, 'kuvaus' => $this->kuvaus, 'added' => $this->added));
+    $row = $query->fetch();
+    $this->id = $row['id'];
+  }
 
 	public static function all(){
 		$query = DB::connection()->prepare('SELECT * FROM Drinkki');
@@ -34,11 +40,12 @@ class Drinkki extends BaseModel{
 		$row = $query->fetch();
 
 		if($row){
+			$hl = self::hinta($row['hintaluokka']);
 			$drinkki = new Drinkki(array(
 				'id' => $row['id'],
 				'nimi' => $row['nimi'],
 				'tyyppi' => $row['tyyppi'],
-				'hintaluokka' => $row['hintaluokka'],
+				'hintaluokka' => $hl,
 				'kuvaus' => $row['kuvaus'],
 				'added' => $row['added']
 			));

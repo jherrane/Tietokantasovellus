@@ -28,6 +28,14 @@
     DrinkkiController::index();
   });
 
+  $routes->post('/drinkki', function(){
+    DrinkkiController::store();
+  });
+
+  $routes->get('/drinkki/new', function(){
+    DrinkkiController::create();
+  });
+
   $routes->get('/drinkki/:id', function($id){
     DrinkkiController::show($id);
   });

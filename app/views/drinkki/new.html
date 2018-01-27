@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Lisää drinkkiresepti</h1>
+
+  <form method="post" action="{{base_path}}/drinkki">
+    <div class="form-group">
+      <label>Nimi</label>
+      <input name="nimi" class="form-control" type="text">
+    </div>
+
+    <div class="form-group">
+      <label for="type">Tyyppi</label>
+      <select name="tyyppi" class="form-control" id="type">
+        <option>Cocktail</option>
+        <option>Long Drink</option>
+        <option>Neat</option>
+        <option>Muu</option>
+      </select>
+    </div> 
+
+    <div class="form-group">
+      <label for="price">Hintaluokka</label>
+      <select name="hintaluokka" class="form-control" id="price">
+        <option>€</option>
+        <option>€€</option>
+        <option>€€€</option>
+      </select>
+    </div> 
+
+    <div class="form-group">
+      <label for="item">Raaka-aineet</label>
+        <select name="raaka-aineet" class="form-control" multiple id="item">
+        <option>Jaloviina(*)</option>
+        <option>Kola</option>
+      </select>
+    </div> 
+    
+    <div class="form-group">
+      <label>Valmistusohje</label>
+      <textarea name="kuvaus" class="form-control">
+      </textarea>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Tallenna</button>
+    </div>
+  </form>
+{% endblock %}
