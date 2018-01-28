@@ -1,6 +1,6 @@
 <?php
 class RaakaAine extends BaseModel{
-	public $id, $nimi, $maara;
+	public $id, $nimi;
 
 	public function __construct($attributes){
 		parent::__construct($attributes);

@@ -56,7 +56,7 @@ class Drinkki extends BaseModel{
 		return null;
 	}
 
-	private static function hinta($hl){
+	public static function hinta($hl){
 		$hintaluokat = array(
 			1 => "€",
 			2 => "€€",

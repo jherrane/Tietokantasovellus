@@ -17,21 +17,22 @@ class DrinkkiController extends BaseController{
 	}
 
 	public static function create(){
+		$raakaAineet = RaakaAine::all();
 		View::make('drinkki/new.html');
 	}
 
 	public static function store(){
 		$params = $_POST;
-		$drinkki = new Drinkki(array(
-			'id' => $params['id'],
-			'nimi' => $params['nimi'],
-			'tyyppi' => $params['tyyppi'],
-			'hintaluokka' => $hl,
-			'kuvaus' => $params['kuvaus'],
-			'added' => $params['added']
-		));
-		Kint::dump($params);
-		$drinkki->save();
+		// $hl = Drinkki::hinta($params['hintaluokka']);
+		// $drinkki = new Drinkki(array(
+		// 	'nimi' => $params['nimi'],
+		// 	'tyyppi' => $params['tyyppi'],
+		// 	'hintaluokka' => $hl,
+		// 	'kuvaus' => $params['kuvaus'],
+		// 	'added' => $params['added']
+		// ));
+		// Kint::dump($params);
+		// $drinkki->save();
 		//Redirect::to('/drinkki/' . $drinkki->id, array('message' => 'Drinkki lisätty kirjastoosi!'));
 	}
 }
