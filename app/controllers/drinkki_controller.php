@@ -23,16 +23,37 @@ class DrinkkiController extends BaseController{
 
 	public static function store(){
 		$params = $_POST;
-		// $hl = Drinkki::hinta($params['hintaluokka']);
-		// $drinkki = new Drinkki(array(
-		// 	'nimi' => $params['nimi'],
-		// 	'tyyppi' => $params['tyyppi'],
-		// 	'hintaluokka' => $hl,
-		// 	'kuvaus' => $params['kuvaus'],
-		// 	'added' => $params['added']
-		// ));
-		// Kint::dump($params);
-		// $drinkki->save();
-		//Redirect::to('/drinkki/' . $drinkki->id, array('message' => 'Drinkki lisätty kirjastoosi!'));
+		$drinkki = new Drinkki(array(
+			'nimi' => $params['nimi'],
+			'tyyppi' => $params['tyyppi'],
+			'hintaluokka' => strlen($params['hintaluokka']/3),
+			'kuvaus' => $params['kuvaus'],
+			'added' => date("Y-m-d")
+		));
+
+		$drinkki_id = $drinkki->saveOrUpdate();
+
+		// Pudota listojen viimeiset elementit, sillä html-javascript-hässäkkä sisältää yhden ylimääräisen tyhjän elementin... Pitäisi olla parempi javascript-hässäkkä!
+		$raakaAineet = $params['raakaAineet'];
+		$maarat = $params['maarat'];
+		$i = 0;
+
+		foreach($raakaAineet as $raakaAine){
+			$m = $maarat[$i++];
+			if($raakaAine != ''){
+				$ra = new RaakaAine(array(
+				'nimi' => $raakaAine
+			));
+			$ra->saveOrIgnore();
+			$drinkki_raakaaine = new DrinkkiRaakaAine(array(
+				'drinkki_id' => $drinkki_id,
+				'raakaaine_id' => $ra->id,
+				'maara' => $m
+			));
+			$drinkki_raakaaine->saveOrIgnore();
+			}	
+		}
+		
+		Redirect::to('/drinkki/' . $drinkki->id, array('message' => 'Drinkki lisätty kirjastoosi!'));
 	}
 }

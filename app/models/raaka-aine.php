@@ -6,6 +6,25 @@ class RaakaAine extends BaseModel{
 		parent::__construct($attributes);
 	}
 	
+	public function saveOrIgnore(){
+		$query = DB::connection()->prepare('SELECT * FROM RaakaAine WHERE nimi = :nimi');
+    	$query->execute(array($this->nimi));
+    	$rows = $query->fetchAll();
+    	if(empty($rows)){
+    		return self::save();
+    	} else {
+    		return;
+    	}
+	}
+
+	private function save(){
+    $query = DB::connection()->prepare('INSERT INTO RaakaAine(nimi) VALUES (:nimi) RETURNING id;');
+    $query->execute(array('nimi' => $this->nimi));
+    $row = $query->fetch();
+    $this->id = $row['id'];
+
+    return $this->id;
+  }
 
 	public static function all(){
 		$query = DB::connection()->prepare('SELECT * FROM RaakaAine');

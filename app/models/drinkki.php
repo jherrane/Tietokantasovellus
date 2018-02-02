@@ -6,19 +6,37 @@ class Drinkki extends BaseModel{
 		parent::__construct($attributes);
 	}
 
-	public function save(){
-    $query = DB::connection()->prepare('INSERT INTO Drinkki (nimi,tyyppi,hintaluokka,kuvaus,added) VALUES (:nimi, :tyyppi, :hintaluokka, :kuvaus, :added) RETURNING id');
-    $query->execute(array('nimi' => $this->nimi, 'tyyppi' => $this->tyyppi, 'hintaluokka' => $this->hintaluokka, 'kuvaus' => $this->kuvaus, 'added' => $this->added));
-    $row = $query->fetch();
-    $this->id = $row['id'];
-  }
+	public function saveOrUpdate(){
+    	$query = DB::connection()->prepare('SELECT * FROM Drinkki WHERE nimi = :nimi');
+    	$query->execute(array($this->nimi));
+    	$rows = $query->fetchAll();
+    	if(empty($rows)){
+    		return self::save();
+    	} else {
+    		self::update($rows[0]);
+    	}
+	}
+
+	private function save(){
+		$query = DB::connection()->prepare('INSERT INTO Drinkki(nimi,tyyppi,hintaluokka,kuvaus,added) VALUES (:nimi, :tyyppi, :hintaluokka, :kuvaus, :added) RETURNING id;');
+		$query->execute(array('nimi' => $this->nimi, 'tyyppi' => $this->tyyppi, 'hintaluokka' => $this->hintaluokka, 'kuvaus' => $this->kuvaus, 'added' => $this->added));
+		$row = $query->fetch();
+		$this->id = $row['id'];
+
+		return $this->id;
+	}
+
+	private function update($drinkki){
+		$query = DB::connection()->prepare('UPDATE Drinkki SET nimi=:nimi, tyyppi=:tyyppi, hintaluokka=:hintaluokka, kuvaus=:kuvaus, added=:added WHERE id=:id;');
+		$query->execute(array('nimi' => $this->nimi, 'tyyppi' => $this->tyyppi, 'hintaluokka' => $this->hintaluokka, 'kuvaus' => $this->kuvaus, 'added' => $this->added, 'id' => $this->id));
+	}
 
 	public static function all(){
 		$query = DB::connection()->prepare('SELECT * FROM Drinkki');
 		$query->execute();
 		$rows = $query->fetchAll();
 		$drinkit = array();
-
+		
 		foreach($rows as $row){
 			$hl = self::hinta($row['hintaluokka']);
 			$drinkit[] = new Drinkki(array(
@@ -35,7 +53,7 @@ class Drinkki extends BaseModel{
 	}
 
 	public static function find($id){
-		$query = DB::connection()->prepare('SELECT * FROM Drinkki WHERE id = :id LIMIT 1');
+		$query = DB::connection()->prepare('SELECT * FROM Drinkki WHERE id = :id LIMIT 1;');
 		$query->execute(array('id' => $id));
 		$row = $query->fetch();
 
