@@ -20,16 +20,12 @@
   	HelloWorldController::edit();
   });
 
-  $routes->get('/show', function(){
-  	HelloWorldController::show();
-  });
-
   $routes->get('/drinkki', function(){
     DrinkkiController::index();
   });
 
   $routes->post('/drinkki', function(){
-    DrinkkiController::store();
+    DrinkkiController::store('Drinkki luotu onnistuneesti!');
   });
 
   $routes->get('/drinkki/new', function(){
@@ -38,4 +34,16 @@
 
   $routes->get('/drinkki/:id', function($id){
     DrinkkiController::show($id);
+  });
+
+  $routes->get('/drinkki/:id/edit', function($id){
+    DrinkkiController::edit($id);
+  });
+
+  $routes->post('/drinkki/:id/edit', function(){
+    DrinkkiController::store('Drinkkiä muokattu onnistuneesti!');
+  });
+
+  $routes->post('/drinkki/:id/destroy',function($id){
+    DrinkkiController::destroy($id);
   });

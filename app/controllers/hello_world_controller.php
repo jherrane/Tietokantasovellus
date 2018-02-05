@@ -25,8 +25,4 @@
     public static function edit(){
       View::make('edit.html');
     }
-
-    public static function show(){
-      View::make('show.html');
-    }
   }

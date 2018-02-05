@@ -28,7 +28,12 @@ class Drinkki extends BaseModel{
 
 	private function update($drinkki){
 		$query = DB::connection()->prepare('UPDATE Drinkki SET nimi=:nimi, tyyppi=:tyyppi, hintaluokka=:hintaluokka, kuvaus=:kuvaus, added=:added WHERE id=:id;');
-		$query->execute(array('nimi' => $this->nimi, 'tyyppi' => $this->tyyppi, 'hintaluokka' => $this->hintaluokka, 'kuvaus' => $this->kuvaus, 'added' => $this->added, 'id' => $this->id));
+		$query->execute(array('nimi' => $this->nimi, 'tyyppi' => $this->tyyppi, 'hintaluokka' => $this->hintaluokka, 'kuvaus' => $this->kuvaus, 'added' => $this->added, 'id' => $drinkki->id));
+	}
+
+	public static function destroy($id){
+		$query = DB::connection()->prepare('DELETE FROM Drinkki WHERE id = :id;');
+		$query->execute(array('id' => $id));
 	}
 
 	public static function all(){

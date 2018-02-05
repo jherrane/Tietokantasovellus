@@ -4,9 +4,11 @@
   <div class="alert alert-success">
     {{message}}
   </div>
-  <p>
-    <button class="btn btn-danger">Poista</button> <a href="#" class="btn btn-default">Muokkaa</a>
-  </p>
+
+  <form method="post" action="{{base_path}}/drinkki/{{drinkki.id}}/destroy" style="display: inline-block;">
+    <button type="submit" class="btn btn-danger">Poista</button>
+  </form>
+  <a href="{{base_path}}/drinkki/{{drinkki.id}}/edit" class="btn btn-info" role="button">Muokkaa</a>
 
   <ul>
     <li><strong>Tyyppi:</strong> {{drinkki.tyyppi}}</li>

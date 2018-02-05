@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+  <h1>Muokkaa reseptiä</h1>
+
+  <form method="post" action="{{base_path}}/drinkki">
+    <div class="form-group">
+      <label>Nimi</label>
+      <input name="nimi" class="form-control" type="text">
+    </div>
+
+    <div class="form-group">
+      <label for="tyyppi">Tyyppi</label>
+      <select name="tyyppi" class="form-control" id="tyyppi">
+        <option>Cocktail</option>
+        <option>Long Drink</option>
+        <option>Neat</option>
+        <option>Muu</option>
+      </select>
+    </div> 
+
+    <div class="form-group">
+      <label for="hintaluokka">Hintaluokka</label>
+      <select name="hintaluokka" class="form-control" id="hintaluokka">
+        <option>€</option>
+        <option>€€</option>
+        <option>€€€</option>
+      </select>
+    </div> 
+
+    <div class="form-group" id="container">
+      <label for="raakaAine">Raaka-aineet, määrä</label>
+        <br/>
+        <div class="input-group control-group after-add-more">
+          <input type="text" id="raakaAine" name="raakaAineet[]" class="form-control" placeholder="Raaka-aine">
+          <input type="text" id="maara" name="maarat[]" class="form-control" placeholder="Määrä">
+          <div class="input-group-btn"> 
+            <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+          </div>
+        </div>
+    </div>
+
+    <div class="copy hide">
+      <div class="control-group input-group" style="margin-top:10px">
+
+        <input type="text" name="raakaAineet[]" class="form-control" placeholder="Raaka-aine">
+        <input type="text" id="maara" name="maarat[]" class="form-control" placeholder="Määrä">
+        <div class="input-group-btn"> 
+          <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+        </div>
+      </div>
+    </div> 
+
+    <div class="form-group">
+      <label>Valmistusohje</label>
+      <textarea name="kuvaus" class="form-control">
+      </textarea>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Tallenna</button>
+    </div>
+  </form>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $(".add-more").click(function(){ 
+          var html = $(".copy").html();
+          $(".after-add-more").after(html);
+      });
+
+      $("body").on("click",".remove",function(){ 
+          $(this).parents(".control-group").remove();
+      });
+    });
+  </script>
+
+{% endblock %}

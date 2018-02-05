@@ -21,7 +21,7 @@ class DrinkkiController extends BaseController{
 		View::make('drinkki/new.html');
 	}
 
-	public static function store(){
+	public static function store($msg){
 		$params = $_POST;
 		$drinkki = new Drinkki(array(
 			'nimi' => $params['nimi'],
@@ -54,6 +54,22 @@ class DrinkkiController extends BaseController{
 			}	
 		}
 		
-		Redirect::to('/drinkki/' . $drinkki->id, array('message' => 'Drinkki lisätty kirjastoosi!'));
+		Redirect::to('/drinkki/' . $drinkki->id, array('message' => $msg));
 	}
+
+	public static function edit($id){
+		$drinkki = Drinkki::find($id);
+		View::make('drinkki/edit.html', array('attributes' => $drinkki));
+	}
+
+	public static function destroy($id){
+		$drinkki = Drinkki::destroy($id);
+		$raakaAineet = RaakaAine::destroyAbandoned($drinkki);
+		foreach ($raakaAineet as $raakaAine) {
+			DrinkkiRaakaAine::destroyAbandoned($drinkki,$raakaAine);
+		}
+
+		Redirect::to('/game', array('message' => 'Peli on poistettu onnistuneesti!'));
+	}
+
 }
