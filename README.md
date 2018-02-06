@@ -31,3 +31,7 @@ Seuraavassa kaikki staattiset käyttöliittymän esimerkkisivut:
 ## Viikon 3 toteutukset
 
 Luokalle Drinkki toteutettiin all- find- ja save-toiminnallisuudet. Samalla vastaavat toiminnallisuudet toteutettiin Raaka-aine- ja Drinkki-Raaka-aine-luokille. Toiminnallisuus on lähellä lopullista, ja poisto- sekä muokkaustoiminnallisuudet on suoraviivaista lisätä koodiin. Listaus, esittely ja lisäysnäkymät toimivat kuin myös lisäyslomake.
+
+## Viikon 4 toteutukset
+
+Kirjautuminen sovellukseen onnistuu käyttäjänimellä "Pekka" ja salasanalla "akkep". 
