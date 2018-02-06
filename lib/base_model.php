@@ -1,12 +1,25 @@
 <?php
-  class BaseModel{
-    protected $validators;
+  abstract class BaseModel{
+    protected $validators, $type;
+    abstract function save();
+    abstract function update($id);
 
     public function __construct($attributes = null){
       foreach($attributes as $attribute => $value){
         if(property_exists($this, $attribute)){
           $this->{$attribute} = $value;
         }
+      }
+    }
+
+    public function saveOrUpdate($id){
+      $query = DB::connection()->prepare("SELECT * FROM {$this->type} WHERE id = :id");
+      $query->execute(array($id));
+      $rows = $query->fetchAll();
+      if(empty($rows)){
+        return $this->save();
+      } else {
+        return $this->update($id);
       }
     }
 

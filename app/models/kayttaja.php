@@ -5,20 +5,10 @@ class Kayttaja extends BaseModel{
 	public function __construct($attributes){
 		parent::__construct($attributes);
 		$this->validators = array('validate_nimi', 'validate_kuvaus');
+		$this->type = "Kayttaja";
 	}
 
-	public function saveOrUpdate($id){
-    	$query = DB::connection()->prepare('SELECT * FROM Kayttaja WHERE id = :id');
-    	$query->execute(array($id));
-    	$rows = $query->fetchAll();
-    	if(empty($rows)){
-    		return self::save();
-    	} else {
-    		return self::update($id);
-    	}
-	}
-
-	private function save(){
+	public function save(){
 		$query = DB::connection()->prepare('INSERT INTO Kayttaja(nimi,salasana) VALUES (:nimi, :salasana) RETURNING id;');
 		$query->execute(array('nimi' => $this->nimi, 'salasana' => $this->salasana));
 		$row = $query->fetch();
@@ -27,7 +17,7 @@ class Kayttaja extends BaseModel{
 		return $this->id;
 	}
 
-	private function update($id){
+	public function update($id){
 		$query = DB::connection()->prepare('UPDATE Kayttaja SET nimi=:nimi, salasana=:salasana WHERE id=:id;');
 		$query->execute(array('nimi' => $this->nimi, 'salasana' => $this->salasana, 'id' => $id));
 		return $id;

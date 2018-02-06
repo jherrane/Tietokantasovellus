@@ -64,17 +64,17 @@ class DrinkkiController extends BaseController{
 				$ra = new RaakaAine(array(
 				'nimi' => $raakaAine
 			));
-			$ra->saveOrIgnore();
+			$ra->save();
 			$drinkki_raakaaine = new DrinkkiRaakaAine(array(
 				'drinkki_id' => $drinkki_id,
 				'raakaaine_id' => $ra->id,
 				'maara' => $m
 			));
-			if($ra->id != '') {$drinkki_raakaaine->saveOrIgnore();}
+			if($ra->id != '') {$drinkki_raakaaine->save();}
 			}	
 		}
 
-		Redirect::to('/drinkit/' . $drinkki_id, array('message' => $msg));
+		Redirect::to('/drinkit' . $drinkki_id, array('message' => $msg));
 	}
 
 	public static function edit($id){

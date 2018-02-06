@@ -5,32 +5,11 @@ class Drinkki extends BaseModel{
 	public function __construct($attributes){
 		parent::__construct($attributes);
 		$this->validators = array('validate_nimi', 'validate_kuvaus', 'validate_raakaAineet');
+		$this->type = "Drinkki";
 	}
 
 	public function saveOrUpdate($id){
-    	$query = DB::connection()->prepare('SELECT * FROM Drinkki WHERE id = :id');
-    	$query->execute(array($id));
-    	$rows = $query->fetchAll();
-    	if(empty($rows)){
-    		return self::save();
-    	} else {
-    		return self::update($id);
-    	}
-	}
-
-	private function save(){
-		$query = DB::connection()->prepare('INSERT INTO Drinkki(nimi,tyyppi,hintaluokka,kuvaus,added) VALUES (:nimi, :tyyppi, :hintaluokka, :kuvaus, :added) RETURNING id;');
-		$query->execute(array('nimi' => $this->nimi, 'tyyppi' => $this->tyyppi, 'hintaluokka' => $this->hintaluokka, 'kuvaus' => $this->kuvaus, 'added' => $this->added));
-		$row = $query->fetch();
-		$this->id = $row['id'];
-
-		return $this->id;
-	}
-
-	private function update($id){
-		$query = DB::connection()->prepare('UPDATE Drinkki SET nimi=:nimi, tyyppi=:tyyppi, hintaluokka=:hintaluokka, kuvaus=:kuvaus, added=:added WHERE id=:id;');
-		$query->execute(array('nimi' => $this->nimi, 'tyyppi' => $this->tyyppi, 'hintaluokka' => $this->hintaluokka, 'kuvaus' => $this->kuvaus, 'added' => $this->added, 'id' => $id));
-		return $id;
+		parent::saveOrUpdate($id);
 	}
 
 	public static function destroy($id){
@@ -57,12 +36,11 @@ class Drinkki extends BaseModel{
 		$drinkit = array();
 		
 		foreach($rows as $row){
-			$hl = self::hinta($row['hintaluokka']);
 			$drinkit[] = new Drinkki(array(
 				'id' => $row['id'],
 				'nimi' => $row['nimi'],
 				'tyyppi' => $row['tyyppi'],
-				'hintaluokka' => $hl,
+				'hintaluokka' => self::hinta($row['hintaluokka']),
 				'kuvaus' => $row['kuvaus'],
 				'added' => $row['added']
 			));
@@ -134,6 +112,21 @@ class Drinkki extends BaseModel{
 
 	public function validate_raakaAineet($raakaAineet){
 		return $this->validate_ainekset($raakaAineet, 1);
+	}
+
+	public function save(){
+		$query = DB::connection()->prepare('INSERT INTO Drinkki(nimi,tyyppi,hintaluokka,kuvaus,added) VALUES (:nimi, :tyyppi, :hintaluokka, :kuvaus, :added) RETURNING id;');
+		$query->execute(array('nimi' => $this->nimi, 'tyyppi' => $this->tyyppi, 'hintaluokka' => $this->hintaluokka, 'kuvaus' => $this->kuvaus, 'added' => $this->added));
+		$row = $query->fetch();
+		$this->id = $row['id'];
+
+		return $this->id;
+	}
+
+	public function update($id){
+		$query = DB::connection()->prepare('UPDATE Drinkki SET nimi=:nimi, tyyppi=:tyyppi, hintaluokka=:hintaluokka, kuvaus=:kuvaus, added=:added WHERE id=:id;');
+		$query->execute(array('nimi' => $this->nimi, 'tyyppi' => $this->tyyppi, 'hintaluokka' => $this->hintaluokka, 'kuvaus' => $this->kuvaus, 'added' => $this->added, 'id' => $id));
+		return $id;
 	}
 
 }
