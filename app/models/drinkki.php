@@ -88,6 +88,32 @@ class Drinkki extends BaseModel{
 		return null;
 	}
 
+	public function on_listalla($kayttaja_id){
+		$query = DB::connection()->prepare('SELECT COUNT(*) FROM KayttajaDrinkki WHERE kayttaja_id = :kayttaja_id AND drinkki_id = :drinkki_id');
+		$query->execute(array(
+			'kayttaja_id' => $kayttaja_id, 
+			'drinkki_id' => $this->id
+		));
+		return $query->fetch()[0];
+	}
+
+	public function lisaaKayttajalle($kayttaja_id){
+		$query = DB::connection()->prepare('INSERT INTO KayttajaDrinkki(kayttaja_id, drinkki_id) VALUES(:kayttaja_id, :drinkki_id)');
+		$query->execute(array(
+			'kayttaja_id' => $kayttaja_id,
+			'drinkki_id' => $this->id
+		));
+	}
+
+	public function poistaKayttajalta($kayttaja_id){
+		$query = DB::connection()->prepare('DELETE FROM KayttajaDrinkki WHERE kayttaja_id = :kayttaja_id AND drinkki_id = :drinkki_id');
+		$query->execute(array(
+			'kayttaja_id' => $kayttaja_id,
+			'drinkki_id' => $this->id
+		));
+	}
+
+
 	public static function hinta($hl){
 		$hintaluokat = array(
 			1 => "€",

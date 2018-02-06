@@ -28,6 +28,22 @@
     DrinkkiController::show($id);
   });
 
+  $routes->get('/drinkit/:id/lisaa_listalle', function($id){
+    DrinkkiController::lisaaListalle($id);
+  });
+
+  $routes->get('/drinkit/:id/poista_listalta', function($id){
+    DrinkkiController::poistaListalta($id);
+  });
+
+  $routes->get('/kayttaja/:kayttaja_id/drinkit/:id/lisaa_listalle', function($kayttaja_id, $id){
+    DrinkkiController::lisaaListalle($id, $kayttaja_id);
+  });
+
+  $routes->get('/kayttaja/:kayttaja_id/drinkit/:id/poista_listalta', function($kayttaja_id, $id){
+    DrinkkiController::poistaListalta($id, $kayttaja_id);
+  });
+
   $routes->get('/drinkit/:id/edit', function($id){
     DrinkkiController::edit($id);
   });

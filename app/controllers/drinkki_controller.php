@@ -3,11 +3,20 @@ class DrinkkiController extends BaseController{
 	public static function index($kayttaja_id = null){
 		$drinkit = Drinkki::all($kayttaja_id);
 		$array = array('drinkit' => $drinkit);
+
+		if(self::get_user_logged_in()){
+			$omalista = array();
+			foreach($drinkit as $drinkki){
+				$omalista[$drinkki->id] = $drinkki->on_listalla($_SESSION['nimi']);
+			}
+			$array['on_listalla'] = $omalista;		
+		}
+		
+
 		if($kayttaja_id){
-			$k = Kayttaja::find($kayttaja_id);
+			$k = Kayttaja::find($kayttaja_id);		
 			$array['kayttajatitle'] = 'Käyttäjän ' . $k->nimi . ' drinkkilista';
 		} 
-
 		View::make('drinkit/index.html', $array);
 	}
 
@@ -74,6 +83,31 @@ class DrinkkiController extends BaseController{
 		$raakaAineet = RaakaAine::findByDrinkki($id);
 		View::make('drinkit/edit.html', array('drinkki' => $drinkki,
 		'raakaAineet' => $raakaAineet));
+	}
+
+	public static function lisaaListalle($id, $kayttaja_id = null){
+		self::check_logged_in();
+		$drinkki = Drinkki::find($id);
+		$drinkki->lisaaKayttajalle($_SESSION['nimi']);
+		if($kayttaja_id){
+			$osoite = '/kayttaja/' . $_SESSION['nimi'] . '/drinkit';
+		} else {
+			$osoite = '/drinkit';
+		}
+		Redirect::to($osoite, array('message' => 'Drinkki lisätty omalle listalle!'));
+	}
+
+	public static function poistaListalta($id, $kayttaja_id = null){
+		self::check_logged_in();
+		$drinkki = Drinkki::find($id);
+		$drinkki->poistaKayttajalta($_SESSION['nimi']);
+		if($kayttaja_id){
+			$osoite = '/kayttaja/' . $_SESSION['nimi'] . '/drinkit';
+		} else {
+			$osoite = '/drinkit';
+		}
+		Kint::dump(array('kayttaja_id' => $_SESSION['nimi'], 'drinkki' => $drinkki));
+		Redirect::to($osoite, array('message' => 'Drinkki poistettu omalta listalta!'));
 	}
 
 	public static function destroy($id){

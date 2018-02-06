@@ -1,10 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-    {% if kayttajatitle %}
-      <h1>{{kayttajatitle}}</h1>
-    {% else %}
-      <h1>Kaikki drinkit</h1>
-    {% endif %}
+  {% if kayttajatitle %}
+    <h1>{{kayttajatitle}}</h1>
+  {% else %}
+    <h1>Kaikki drinkit</h1>
+  {% endif %}
+  {% if message %}
+    <div class="alert alert-success">
+      {{message}}
+    </div>
+  {% endif %}
   {% if user_logged_in %}
     <p>
       <a href="{{base_path}}/drinkit/new" class="btn btn-success">Lisää drinkki</a>
@@ -19,20 +24,24 @@
         <th>Hintaluokka</th>
         <th>Lisäyspäivä</th>
         {% if user_logged_in %}
-          <th></th>
+          <th>Omassa kirjastossa</th>
         {% endif %}       
       </tr>
     </thead>
 
     <tbody>
-      {% for drinkki in drinkit %}
+      {% for id, drinkki in drinkit %}
         <tr>
           <td><a href="{{base_path}}/drinkit/{{drinkki.id}}">{{drinkki.nimi}}</a></td>
           <td>{{drinkki.tyyppi}}</td>
           <td><label class="label label-info">{{drinkki.hintaluokka}}</label></td>
           <td>{{drinkki.added}}</td>
           {% if user_logged_in %}
-            <th><a class="btn btn-default btn-sm" href="#">Muokkaa</a></th>
+            <th>{% if on_listalla[drinkki.id] %}
+              <a href="./drinkit/{{drinkki.id}}/poista_listalta"" class="btn-sm btn-success">Poista listalta</a>
+            {% else %}
+              <a href="./drinkit/{{drinkki.id}}/lisaa_listalle"" class="btn-sm btn-primary">Lisää listalle</a>
+            {% endif %}</th>
           {% endif %}
           
         </tr>
