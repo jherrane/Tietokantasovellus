@@ -4,7 +4,7 @@ class Drinkki extends BaseModel{
 
 	public function __construct($attributes){
 		parent::__construct($attributes);
-		$this->validators = array('validate_nimi', 'validate_kuvaus');
+		$this->validators = array('validate_nimi', 'validate_kuvaus', 'validate_raakaAineet');
 	}
 
 	public function saveOrUpdate($id){
@@ -34,6 +34,9 @@ class Drinkki extends BaseModel{
 	}
 
 	public static function destroy($id){
+		$query = DB::connection()->prepare('DELETE FROM KayttajaDrinkki WHERE drinkki_id = :id;');
+		$query->execute(array('id' => $id));
+
 		$query = DB::connection()->prepare('DELETE FROM DrinkkiRaakaAine WHERE drinkki_id = :id;');
 		$query->execute(array('id' => $id));
 
@@ -42,9 +45,14 @@ class Drinkki extends BaseModel{
 
 	}
 
-	public static function all(){
-		$query = DB::connection()->prepare('SELECT * FROM Drinkki');
-		$query->execute();
+	public static function all($kayttaja_id){
+		if($kayttaja_id){
+			$query = DB::connection()->prepare('SELECT * FROM Drinkki, KayttajaDrinkki WHERE KayttajaDrinkki.kayttaja_id = :kayttaja_id AND Drinkki.id = KayttajaDrinkki.drinkki_id;');
+			$query->execute(array('kayttaja_id' => $kayttaja_id));
+		} else {
+			$query = DB::connection()->prepare('SELECT * FROM Drinkki');
+			$query->execute();
+		}
 		$rows = $query->fetchAll();
 		$drinkit = array();
 		
@@ -96,6 +104,10 @@ class Drinkki extends BaseModel{
 
 	public function validate_kuvaus(){
 		return $this->validate_string_length($this->kuvaus, 'kuvaus', 10);
+	}
+
+	public function validate_raakaAineet($raakaAineet){
+		return $this->validate_ainekset($raakaAineet, 1);
 	}
 
 }

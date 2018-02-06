@@ -34,11 +34,20 @@
       return $errors;
     }
 
-    public function errors(){
+    public function validate_ainekset($raakaAineet,$len){
+      $errors = array();
+      if(count($raakaAineet)<$len){
+        $errors[] = "Anna ainakin {$len} raaka-aine!";
+      }
+
+      return $errors;
+    }
+
+    public function errors($raakaAineet){
       $errors = array();
 
       foreach($this->validators as $validator){
-        $errors = array_merge($errors, $this->{$validator}());
+        $errors = array_merge($errors, $this->{$validator}($raakaAineet));
       }
 
       return $errors;

@@ -3,12 +3,22 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
-  <h1>Muokkaa reseptiä</h1>
+  <h1>Lisää drinkkiresepti</h1>
 
-  <form method="post" action="{{base_path}}/drinkki/{{drinkki.id}}/edit">
+  {% if errors %}
+    <div class="alert alert-danger">
+      <ul>
+        {% for error in errors %}
+          <li>{{error}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  <form method="post" action="{{base_path}}/drinkit">
     <div class="form-group">
       <label>Nimi</label>
-      <input name="nimi" class="form-control" type="text" value="{{drinkki.nimi}}">
+      <input name="nimi" class="form-control" type="text">
     </div>
 
     <div class="form-group">
@@ -16,10 +26,6 @@
       <select name="tyyppi" class="form-control" id="tyyppi" value="{{drinkki.tyyppi}}">
         {% set tyypit = ['Cocktail','Long Drink','Neat', 'Muu'] %}
         {% for tyyppi in tyypit %}
-          {% set selected = '' %}
-          {% if(drinkki.tyyppi == tyyppi) %}
-            {% set selected = 'selected' %}
-          {% endif %}
           <option {{selected}}>{{tyyppi}}</option>
         {% endfor %}
       </select>
@@ -30,10 +36,6 @@
       <select name="hintaluokka" class="form-control" id="hintaluokka">
         {% set hintaluokat = ['€','€€','€€€'] %}
         {% for hintaluokka in hintaluokat %}
-          {% set selected = '' %}
-          {% if(drinkki.hintaluokka == hintaluokka) %}
-            {% set selected = 'selected' %}
-          {% endif %}
           <option {{selected}}>{{hintaluokka}}</option>
         {% endfor %}
       </select>
@@ -43,10 +45,8 @@
       <label for="raakaAine">Raaka-aineet, määrä</label>
         <br/>
         <div class="input-group control-group after-add-more">
-          {% for ra in raakaAineet %}
-          <input type="text" id="raakaAine" name="raakaAineet[]" class="form-control" value="{{ra.nimi}}">
-          <input type="text" id="maara" name="maarat[]" class="form-control" value="{{ra.maara}}">
-          {% endfor %}
+          <input type="text" id="raakaAine" name="raakaAineet[]" class="form-control" placeholder="Raaka-aine">
+          <input type="text" id="maara" name="maarat[]" class="form-control" placeholder="Määrä">
           <div class="input-group-btn"> 
             <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
           </div>
@@ -66,7 +66,7 @@
 
     <div class="form-group">
       <label>Valmistusohje</label>
-      <textarea name="kuvaus" class="form-control">{{drinkki.kuvaus}}</textarea>
+      <textarea name="kuvaus" class="form-control"></textarea>
     </div>
     <div class="form-group">
       <button type="submit" class="btn btn-primary">Tallenna</button>
@@ -85,5 +85,4 @@
       });
     });
   </script>
-
 {% endblock %}

@@ -8,31 +8,35 @@
     SandboxController::sandbox();
   });
 
-  $routes->get('/drinkki', function(){
+  $routes->get('/drinkit', function(){
     DrinkkiController::index();
   });
 
-  $routes->post('/drinkki', function(){
+  $routes->get('/kayttaja/:id/drinkit', function($kayttaja_id){
+    DrinkkiController::index($kayttaja_id);
+  });
+
+  $routes->post('/drinkit', function(){
     DrinkkiController::store('Drinkki luotu onnistuneesti!');
   });
 
-  $routes->get('/drinkki/new', function(){
+  $routes->get('/drinkit/new', function(){
     DrinkkiController::create();
   });
 
-  $routes->get('/drinkki/:id', function($id){
+  $routes->get('/drinkit/:id', function($id){
     DrinkkiController::show($id);
   });
 
-  $routes->get('/drinkki/:id/edit', function($id){
+  $routes->get('/drinkit/:id/edit', function($id){
     DrinkkiController::edit($id);
   });
 
-  $routes->post('/drinkki/:id/edit', function($id){
+  $routes->post('/drinkit/:id/edit', function($id){
     DrinkkiController::store('Drinkkiä muokattu onnistuneesti!', $id);
   });
 
-  $routes->post('/drinkki/:id/destroy',function($id){
+  $routes->post('/drinkit/:id/destroy',function($id){
     DrinkkiController::destroy($id);
   });
 

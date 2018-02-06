@@ -16,13 +16,9 @@
     }
 
     public static function check_logged_in(){
-      if(isset($_SESSION['nimi'])){
-       if(Kayttaja::find($_SESSION['nimi']));
-        return true;
-      }
-
-      // Käyttäjä ei ole kirjautunut sisään
-      return false;
+    if(!isset($_SESSION['nimi'])){
+      Redirect::to('/login', array('message' => 'Kirjaudu ensin sisään!'));
     }
+  }
 
   }
