@@ -1,6 +1,6 @@
 <?php
 class RaakaAine extends BaseModel{
-	public $id, $nimi;
+	public $id, $nimi, $maara;
 
 	public function __construct($attributes){
 		parent::__construct($attributes);
@@ -43,7 +43,7 @@ class RaakaAine extends BaseModel{
 	}
 
 	public static function findByDrinkki($id){
-		$query = DB::connection()->prepare('SELECT RaakaAine.id, RaakaAine.nimi, DrinkkiRaakaAine.maara FROM Drinkki, DrinkkiRaakaAine, RaakaAine WHERE Drinkki.id = :id AND DrinkkiRaakaAine.drinkki_id = Drinkki.id AND RaakaAine.id = DrinkkiRaakaAine.raakaaine_id;');
+		$query = DB::connection()->prepare('SELECT RaakaAine.id as id, RaakaAine.nimi as nimi, DrinkkiRaakaAine.maara as maara FROM Drinkki, DrinkkiRaakaAine, RaakaAine WHERE Drinkki.id = :id AND DrinkkiRaakaAine.drinkki_id = Drinkki.id AND RaakaAine.id = DrinkkiRaakaAine.raakaaine_id;');
 		$query->execute(array('id' => $id));
 		$rows = $query->fetchAll();
 		$raakaAineet = array();
@@ -55,7 +55,6 @@ class RaakaAine extends BaseModel{
 				'maara' => $row['maara']
 			));
 		}
-
 		return $raakaAineet;
 	}
 

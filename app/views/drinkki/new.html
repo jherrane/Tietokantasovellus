@@ -23,20 +23,21 @@
 
     <div class="form-group">
       <label for="tyyppi">Tyyppi</label>
-      <select name="tyyppi" class="form-control" id="tyyppi">
-        <option>Cocktail</option>
-        <option>Long Drink</option>
-        <option>Neat</option>
-        <option>Muu</option>
+      <select name="tyyppi" class="form-control" id="tyyppi" value="{{drinkki.tyyppi}}">
+        {% set tyypit = ['Cocktail','Long Drink','Neat', 'Muu'] %}
+        {% for tyyppi in tyypit %}
+          <option {{selected}}>{{tyyppi}}</option>
+        {% endfor %}
       </select>
     </div> 
 
     <div class="form-group">
       <label for="hintaluokka">Hintaluokka</label>
       <select name="hintaluokka" class="form-control" id="hintaluokka">
-        <option>€</option>
-        <option>€€</option>
-        <option>€€€</option>
+        {% set hintaluokat = ['€','€€','€€€'] %}
+        {% for hintaluokka in hintaluokat %}
+          <option {{selected}}>{{hintaluokka}}</option>
+        {% endfor %}
       </select>
     </div> 
 
@@ -65,8 +66,7 @@
 
     <div class="form-group">
       <label>Valmistusohje</label>
-      <textarea name="kuvaus" class="form-control">
-      </textarea>
+      <textarea name="kuvaus" class="form-control"></textarea>
     </div>
     <div class="form-group">
       <button type="submit" class="btn btn-primary">Tallenna</button>

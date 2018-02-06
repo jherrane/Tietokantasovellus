@@ -5,28 +5,37 @@
 
   <h1>Muokkaa reseptiä</h1>
 
-  <form method="post" action="{{base_path}}/drinkki">
+  <form method="post" action="{{base_path}}/drinkki/{{drinkki.id}}/edit">
     <div class="form-group">
       <label>Nimi</label>
-      <input name="nimi" class="form-control" type="text">
+      <input name="nimi" class="form-control" type="text" value="{{drinkki.nimi}}">
     </div>
 
     <div class="form-group">
       <label for="tyyppi">Tyyppi</label>
-      <select name="tyyppi" class="form-control" id="tyyppi">
-        <option>Cocktail</option>
-        <option>Long Drink</option>
-        <option>Neat</option>
-        <option>Muu</option>
+      <select name="tyyppi" class="form-control" id="tyyppi" value="{{drinkki.tyyppi}}">
+        {% set tyypit = ['Cocktail','Long Drink','Neat', 'Muu'] %}
+        {% for tyyppi in tyypit %}
+          {% set selected = '' %}
+          {% if(drinkki.tyyppi == tyyppi) %}
+            {% set selected = 'selected' %}
+          {% endif %}
+          <option {{selected}}>{{tyyppi}}</option>
+        {% endfor %}
       </select>
     </div> 
 
     <div class="form-group">
       <label for="hintaluokka">Hintaluokka</label>
       <select name="hintaluokka" class="form-control" id="hintaluokka">
-        <option>€</option>
-        <option>€€</option>
-        <option>€€€</option>
+        {% set hintaluokat = ['€','€€','€€€'] %}
+        {% for hintaluokka in hintaluokat %}
+          {% set selected = '' %}
+          {% if(drinkki.hintaluokka == hintaluokka) %}
+            {% set selected = 'selected' %}
+          {% endif %}
+          <option {{selected}}>{{hintaluokka}}</option>
+        {% endfor %}
       </select>
     </div> 
 
@@ -34,8 +43,10 @@
       <label for="raakaAine">Raaka-aineet, määrä</label>
         <br/>
         <div class="input-group control-group after-add-more">
-          <input type="text" id="raakaAine" name="raakaAineet[]" class="form-control" placeholder="Raaka-aine">
-          <input type="text" id="maara" name="maarat[]" class="form-control" placeholder="Määrä">
+          {% for ra in raakaAineet %}
+          <input type="text" id="raakaAine" name="raakaAineet[]" class="form-control" value="{{ra.nimi}}">
+          <input type="text" id="maara" name="maarat[]" class="form-control" value="{{ra.maara}}">
+          {% endfor %}
           <div class="input-group-btn"> 
             <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
           </div>
@@ -55,8 +66,7 @@
 
     <div class="form-group">
       <label>Valmistusohje</label>
-      <textarea name="kuvaus" class="form-control">
-      </textarea>
+      <textarea name="kuvaus" class="form-control">{{drinkki.kuvaus}}</textarea>
     </div>
     <div class="form-group">
       <button type="submit" class="btn btn-primary">Tallenna</button>

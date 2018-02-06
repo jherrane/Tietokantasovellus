@@ -21,12 +21,12 @@ class DrinkkiController extends BaseController{
 		View::make('drinkki/new.html');
 	}
 
-	public static function store($msg){
+	public static function store($msg, $id = null){
 		$params = $_POST;
 		$drinkki = new Drinkki(array(
 			'nimi' => $params['nimi'],
 			'tyyppi' => $params['tyyppi'],
-			'hintaluokka' => strlen($params['hintaluokka']/3),
+			'hintaluokka' => strlen($params['hintaluokka'])/3,
 			'kuvaus' => $params['kuvaus'],
 			'added' => date("Y-m-d")
 		));
@@ -34,10 +34,10 @@ class DrinkkiController extends BaseController{
 		// Tarkista virheviestit ja ohjaa virheiden löytyessä muualle
 		$errors = $drinkki->errors();
 		if(count($errors) > 0) {
-			View::make('drinkki/new.html', array('errors' => $errors, 'attributes' => $attributes));
+			View::make('drinkki/new.html', array('errors' => $errors));
 		}
 
-		$drinkki_id = $drinkki->saveOrUpdate();
+		$drinkki_id = $drinkki->saveOrUpdate($id);
 
 		// Pudota listojen viimeiset elementit, sillä html-javascript-hässäkkä sisältää yhden ylimääräisen tyhjän elementin... Pitäisi olla parempi javascript-hässäkkä!
 		$raakaAineet = $params['raakaAineet'];
@@ -59,14 +59,14 @@ class DrinkkiController extends BaseController{
 			$drinkki_raakaaine->saveOrIgnore();
 			}	
 		}
-		
-		Redirect::to('/drinkki/' . $drinkki->id, array('message' => $msg));
+		Redirect::to('/drinkki/' . $drinkki_id, array('message' => $msg));
 	}
 
 	public static function edit($id){
 		$drinkki = Drinkki::find($id);
-		RaakaAine::destroyAbandoned();
-		View::make('drinkki/edit.html', array('attributes' => $drinkki));
+		$raakaAineet = RaakaAine::findByDrinkki($id);
+		View::make('drinkki/edit.html', array('drinkki' => $drinkki,
+		'raakaAineet' => $raakaAineet));
 	}
 
 	public static function destroy($id){

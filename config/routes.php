@@ -40,8 +40,8 @@
     DrinkkiController::edit($id);
   });
 
-  $routes->post('/drinkki/:id/edit', function(){
-    DrinkkiController::store('Drinkkiä muokattu onnistuneesti!');
+  $routes->post('/drinkki/:id/edit', function($id){
+    DrinkkiController::store('Drinkkiä muokattu onnistuneesti!', $id);
   });
 
   $routes->post('/drinkki/:id/destroy',function($id){

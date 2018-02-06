@@ -7,14 +7,14 @@ class Drinkki extends BaseModel{
 		$this->validators = array('validate_nimi', 'validate_kuvaus');
 	}
 
-	public function saveOrUpdate(){
-    	$query = DB::connection()->prepare('SELECT * FROM Drinkki WHERE nimi = :nimi');
-    	$query->execute(array($this->nimi));
+	public function saveOrUpdate($id){
+    	$query = DB::connection()->prepare('SELECT * FROM Drinkki WHERE id = :id');
+    	$query->execute(array($id));
     	$rows = $query->fetchAll();
     	if(empty($rows)){
     		return self::save();
     	} else {
-    		self::update($rows[0]);
+    		return self::update($id);
     	}
 	}
 
@@ -27,9 +27,10 @@ class Drinkki extends BaseModel{
 		return $this->id;
 	}
 
-	private function update($drinkki){
+	private function update($id){
 		$query = DB::connection()->prepare('UPDATE Drinkki SET nimi=:nimi, tyyppi=:tyyppi, hintaluokka=:hintaluokka, kuvaus=:kuvaus, added=:added WHERE id=:id;');
-		$query->execute(array('nimi' => $this->nimi, 'tyyppi' => $this->tyyppi, 'hintaluokka' => $this->hintaluokka, 'kuvaus' => $this->kuvaus, 'added' => $this->added, 'id' => $drinkki->id));
+		$query->execute(array('nimi' => $this->nimi, 'tyyppi' => $this->tyyppi, 'hintaluokka' => $this->hintaluokka, 'kuvaus' => $this->kuvaus, 'added' => $this->added, 'id' => $id));
+		return $id;
 	}
 
 	public static function destroy($id){
