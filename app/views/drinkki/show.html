@@ -1,15 +1,14 @@
 {% extends "base.html" %}
+{% import "macros/forms.html" as forms %}
 {% block content %}
   <h1>{{drinkki.nimi}}</h1>
-  {%if messages%}
+  {%if message%}
     <div class="alert alert-success">
       {{message}}
     </div>
   {% endif %}
 
-  <form method="post" action="{{base_path}}/drinkki/{{drinkki.id}}/destroy" style="display: inline-block;">
-    <button type="submit" class="btn btn-danger">Poista</button>
-  </form>
+  {{forms.destroy_button("#{base_path}/drinkki/#{drinkki.id}/destroy")}}
   <a href="{{base_path}}/drinkki/{{drinkki.id}}/edit" class="btn btn-info" role="button">Muokkaa</a>
 
   <ul>

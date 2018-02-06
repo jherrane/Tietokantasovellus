@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
-  <h1>Drinkkilista</h1>
+  {% if user_logged_in %}
+    <h1>Käyttäjän {{user_logged_in.nimi}} drinkkilista</h1>
+  {% else %}
+    <h1>Drinkkilista</h1>
+  {% endif %}
 
   <p>
     <a href="{{base_path}}/drinkki/new" class="btn btn-success">Lisää drinkki</a>

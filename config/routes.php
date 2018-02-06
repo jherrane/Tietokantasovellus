@@ -1,23 +1,11 @@
 <?php
 
   $routes->get('/', function() {
-    HelloWorldController::index();
+    SandboxController::index();
   });
 
   $routes->get('/hiekkalaatikko', function() {
-    HelloWorldController::sandbox();
-  });
-
-  $routes->get('/login', function(){
-  	HelloWorldController::login();
-  });
-
-  $routes->get('/list', function(){
-  	HelloWorldController::list();
-  });
-
-  $routes->get('/edit', function(){
-  	HelloWorldController::edit();
+    SandboxController::sandbox();
   });
 
   $routes->get('/drinkki', function(){
@@ -46,4 +34,16 @@
 
   $routes->post('/drinkki/:id/destroy',function($id){
     DrinkkiController::destroy($id);
+  });
+
+  $routes->get('/login', function(){
+    KayttajaController::login();
+  });
+  
+  $routes->post('/login', function(){
+    KayttajaController::handle_login();
+  });
+
+  $routes->get('/logout', function(){
+    KayttajaController::logout();
   });

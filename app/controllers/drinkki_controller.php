@@ -39,7 +39,6 @@ class DrinkkiController extends BaseController{
 
 		$drinkki_id = $drinkki->saveOrUpdate($id);
 
-		// Pudota listojen viimeiset elementit, sillä html-javascript-hässäkkä sisältää yhden ylimääräisen tyhjän elementin... Pitäisi olla parempi javascript-hässäkkä!
 		$raakaAineet = $params['raakaAineet'];
 		$maarat = $params['maarat'];
 		$i = 0;
@@ -56,7 +55,7 @@ class DrinkkiController extends BaseController{
 				'raakaaine_id' => $ra->id,
 				'maara' => $m
 			));
-			$drinkki_raakaaine->saveOrIgnore();
+			if($ra->id != '') {$drinkki_raakaaine->saveOrIgnore();}
 			}	
 		}
 		Redirect::to('/drinkki/' . $drinkki_id, array('message' => $msg));

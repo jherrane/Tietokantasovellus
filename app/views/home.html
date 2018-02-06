@@ -4,6 +4,11 @@
   <div class="page-header">
     <h1>Tervetuloa DrinkIt!-drinkkiarkistoon</h1>
   </div>
+  {%if message%}
+    <div class="alert alert-success">
+      {{message}}
+    </div>
+  {% endif %}
 
   <div class="input-group mb-3">
     <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">

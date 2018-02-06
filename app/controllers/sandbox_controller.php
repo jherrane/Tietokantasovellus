@@ -1,5 +1,5 @@
 <?php
-  class HelloWorldController extends BaseController{
+  class SandboxController extends BaseController{
 
     public static function index(){
       // make-metodi renderöi app/views-kansiossa sijaitsevia tiedostoja
@@ -20,17 +20,5 @@
 
       $errors = $test->errors();
       Kint::dump($errors);
-    }
-
-    public static function login(){
-      View::make('login.html');
-    }
-
-    public static function list(){
-      View::make('list.html');
-    }
-
-    public static function edit(){
-      View::make('edit.html');
     }
   }

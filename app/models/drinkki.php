@@ -64,22 +64,17 @@ class Drinkki extends BaseModel{
 	}
 
 	public static function find($id){
-		$query = DB::connection()->prepare('SELECT * FROM Drinkki WHERE id = :id LIMIT 1;');
-		$query->execute(array('id' => $id));
-		$row = $query->fetch();
+		$row = self::getOne('Drinkki', $id);
 
 		if($row){
-			$hl = self::hinta($row['hintaluokka']);
-			$drinkki = new Drinkki(array(
+			return new Drinkki(array(
 				'id' => $row['id'],
 				'nimi' => $row['nimi'],
 				'tyyppi' => $row['tyyppi'],
-				'hintaluokka' => $hl,
+				'hintaluokka' => self::hinta($row['hintaluokka']),
 				'kuvaus' => $row['kuvaus'],
 				'added' => $row['added']
 			));
-		
-			return $drinkki;
 		}
 
 		return null;
