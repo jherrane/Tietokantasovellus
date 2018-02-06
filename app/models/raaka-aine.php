@@ -59,4 +59,9 @@ class RaakaAine extends BaseModel{
 		return $raakaAineet;
 	}
 
+	public static function destroyAbandoned(){
+		$query = DB::connection()->prepare('DELETE FROM RaakaAine WHERE id not IN (SELECT raakaaine_id FROM DrinkkiRaakaAine WHERE raakaaine_id is not null)');
+		$query->execute();
+	}
+
 }

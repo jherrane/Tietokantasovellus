@@ -10,8 +10,16 @@
       $test = Drinkki::find(1);
       $drinkit = Drinkki::all();
 
-      Kint::dump($drinkit);
-      Kint::dump($test);
+      $test = new Drinkki(array(
+        'nimi' => 'a',
+        'tyyppi' => 'Muu',
+        'hintaluokka' => '€€€',
+        'kuvaus' => 'Moi, ei.',
+        'added' => '1-1-1970'
+      ));
+
+      $errors = $test->errors();
+      Kint::dump($errors);
     }
 
     public static function login(){

@@ -4,6 +4,7 @@ class Drinkki extends BaseModel{
 
 	public function __construct($attributes){
 		parent::__construct($attributes);
+		$this->validators = array('validate_nimi', 'validate_kuvaus');
 	}
 
 	public function saveOrUpdate(){
@@ -32,8 +33,12 @@ class Drinkki extends BaseModel{
 	}
 
 	public static function destroy($id){
+		$query = DB::connection()->prepare('DELETE FROM DrinkkiRaakaAine WHERE drinkki_id = :id;');
+		$query->execute(array('id' => $id));
+
 		$query = DB::connection()->prepare('DELETE FROM Drinkki WHERE id = :id;');
 		$query->execute(array('id' => $id));
+
 	}
 
 	public static function all(){
@@ -88,4 +93,13 @@ class Drinkki extends BaseModel{
 
 		return $hintaluokat[$hl];
 	}
+
+	public function validate_nimi(){
+		return $this->validate_string_length($this->nimi, 'nimi', 3);
+	}
+
+	public function validate_kuvaus(){
+		return $this->validate_string_length($this->kuvaus, 'kuvaus', 10);
+	}
+
 }

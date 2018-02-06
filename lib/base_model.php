@@ -15,12 +15,24 @@
       }
     }
 
+    public function validate_string_length($str, $which, $len){
+      $errors = array();
+
+      if($str == '' || $str == null){
+        $errors[] = "Muuttuja \"{$which}\" ei saa olla tyhjä!";
+      }
+      if(strlen($str)<$len){
+        $errors[] = "Muuttujan \"{$which}\" pituuden tulee olla vähintään {$len} merkkiä!";
+      }
+      return $errors;
+    }
+
     public function errors(){
       // Lisätään $errors muuttujaan kaikki virheilmoitukset taulukkona
       $errors = array();
 
       foreach($this->validators as $validator){
-        // Kutsu validointimetodia tässä ja lisää sen palauttamat virheet errors-taulukkoon
+        $errors = array_merge($errors, $this->{$validator}());
       }
 
       return $errors;

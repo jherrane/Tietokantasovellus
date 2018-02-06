@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
   <h1>{{drinkki.nimi}}</h1>
-  <div class="alert alert-success">
-    {{message}}
-  </div>
+  {%if messages%}
+    <div class="alert alert-success">
+      {{message}}
+    </div>
+  {% endif %}
 
   <form method="post" action="{{base_path}}/drinkki/{{drinkki.id}}/destroy" style="display: inline-block;">
     <button type="submit" class="btn btn-danger">Poista</button>

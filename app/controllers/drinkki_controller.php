@@ -31,6 +31,12 @@ class DrinkkiController extends BaseController{
 			'added' => date("Y-m-d")
 		));
 
+		// Tarkista virheviestit ja ohjaa virheiden löytyessä muualle
+		$errors = $drinkki->errors();
+		if(count($errors) > 0) {
+			View::make('drinkki/new.html', array('errors' => $errors, 'attributes' => $attributes));
+		}
+
 		$drinkki_id = $drinkki->saveOrUpdate();
 
 		// Pudota listojen viimeiset elementit, sillä html-javascript-hässäkkä sisältää yhden ylimääräisen tyhjän elementin... Pitäisi olla parempi javascript-hässäkkä!
@@ -59,17 +65,14 @@ class DrinkkiController extends BaseController{
 
 	public static function edit($id){
 		$drinkki = Drinkki::find($id);
+		RaakaAine::destroyAbandoned();
 		View::make('drinkki/edit.html', array('attributes' => $drinkki));
 	}
 
 	public static function destroy($id){
-		$drinkki = Drinkki::destroy($id);
-		$raakaAineet = RaakaAine::destroyAbandoned($drinkki);
-		foreach ($raakaAineet as $raakaAine) {
-			DrinkkiRaakaAine::destroyAbandoned($drinkki,$raakaAine);
-		}
-
-		Redirect::to('/game', array('message' => 'Peli on poistettu onnistuneesti!'));
+		Drinkki::destroy($id);
+		RaakaAine::destroyAbandoned();
+		Redirect::to('/drinkki', array('message' => 'Drinkki on poistettu onnistuneesti!'));
 	}
 
 }
