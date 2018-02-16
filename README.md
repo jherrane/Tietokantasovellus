@@ -18,20 +18,4 @@ Järjestelmän ylläpitäjä voi list järjestelmän reseptejä joko kokonaan it
 
 ## Käyttöliittymä
 
-Seuraavassa kaikki staattiset käyttöliittymän esimerkkisivut:
-
-[Etusivu](http://jherrane.users.cs.helsinki.fi/tsoha/)
-
-[Listaus](http://jherrane.users.cs.helsinki.fi/tsoha/list)
-
-[Muokkaus](http://jherrane.users.cs.helsinki.fi/tsoha/edit)
-
-[Esittely](http://jherrane.users.cs.helsinki.fi/tsoha/show)
-
-## Viikon 3 toteutukset
-
-Luokalle Drinkki toteutettiin all- find- ja save-toiminnallisuudet. Samalla vastaavat toiminnallisuudet toteutettiin Raaka-aine- ja Drinkki-Raaka-aine-luokille. Toiminnallisuus on lähellä lopullista, ja poisto- sekä muokkaustoiminnallisuudet on suoraviivaista lisätä koodiin. Listaus, esittely ja lisäysnäkymät toimivat kuin myös lisäyslomake.
-
-## Viikon 4 toteutukset
-
-Kirjautuminen sovellukseen onnistuu käyttäjänimellä "Pekka" ja salasanalla "akkep". 
+Käyttöliittymän kuvaus löytyy dokumentaatiosta eikä staattisia esimerkkisivuja enää ylläpidetä. Varsinainen sovellus sisältää valmiit toiminnalliset sivut lähes alkuperäisen suunnitelman mukaisessa muodossa.
